@@ -1,0 +1,5 @@
+# Pac-man configuration
+{
+	"lives": 3,
+	"seed": 42
+}
