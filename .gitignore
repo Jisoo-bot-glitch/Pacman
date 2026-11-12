@@ -1,0 +1,7 @@
+.venv
+__pychache__/
+*.pyc
+.mypy_chache/
+.pytest_chache/
+build/
+dist/
