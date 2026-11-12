@@ -1,13 +1,32 @@
 VENV = .venv
+PY = $(VENV)/bin/python
+CONFIG = config.json
 
-install: Install activity dependencies using pip, uv, pipx, or any other package manager
-of your choice.
-• run: Execute the main script of your activity (e.g., via Python interpreter).
-• debug: Run the main script in debug mode using Python’s built-in debugger (e.g., pdb).
-• clean: Remove temporary files or caches (e.g., __pycache__, .mypy_cache) to keep
-the activity environment clean
- lint: flake8 . and mypy . --warn-return-any --warn-unused-ignores
---ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
-Run with: make lint.
-• lint-strict (optional): flake8 . and mypy . --strict
-Run with: make lint-strict
+.PHONY:
+	install run debug clean lint lint-strict
+
+install:
+	python3 -m venv $(VENV)
+	$(PY) -m pip install --upgrade pip
+	$(PY) -m pip install -r requirements.txt
+	$(PY) -m pip install flake8 mypy pytest
+
+run:
+	$(PY) pac-man.py $(CONFIG)
+
+debug:
+	$(PY) -m pbd pac-man.py $(CONFIG)
+
+clean:
+	find . -path ./$(VENV) -prune -o -type d -name __pycache__ -exec rm -rf {} +
+	rm -rf .mypy_cache .pytest_cache
+
+lint:
+	$(PY) -m flake8 . 
+	$(PY) -m mypy . --warn-return-any --warn-unused-ignores \
+	--ignore-missing-imports --disallow-untyped-defs \
+	--check-untyped-defs
+
+lint-strict:
+	$(PY) -m flake8 .
+	$(PY) -m mypy . --strict
