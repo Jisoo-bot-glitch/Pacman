@@ -1,7 +1,7 @@
 .venv
-__pychache__/
+__pycache__/
 *.pyc
-.mypy_chache/
-.pytest_chache/
+.mypy_cache/
+.pytest_cache/
 build/
 dist/
