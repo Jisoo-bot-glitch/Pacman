@@ -1,0 +1,1 @@
+"""Ghost movement: BFS chase toward the player, flee when frightened."""

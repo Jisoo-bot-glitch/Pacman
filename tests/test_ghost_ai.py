@@ -1,0 +1,1 @@
+"""Tests for game/ghost_ai.py."""

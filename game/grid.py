@@ -3,6 +3,7 @@ N = 1
 E = 2
 S = 4
 W = 8
+ALL_WALLS = N | E | S | W
 
 
 def can_move(maze: list[list[int]], x: int, y: int, direction: int) -> bool:
