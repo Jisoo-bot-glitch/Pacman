@@ -10,7 +10,6 @@ Position = tuple[int, int]
 TILE_SIZE = 36
 MARGIN = 20
 HUD_HEIGHT = 48
-
 BACKGROUND_COLOR = (255, 255, 255)
 WALL_COLOR = (139, 69, 19)
 PATTERN_COLOR = (135, 206, 235)
@@ -97,8 +96,8 @@ def draw_maze(screen: pygame.Surface, maze: list[list[int]],
                     fish1 = (px, py)
                 if count == 11:
                     fish2 = (px, py)
-        screen.blit(sprites["deco1"], fish1)
-        screen.blit(sprites["deco2"], fish2)
+    screen.blit(sprites["deco1"], fish1)
+    screen.blit(sprites["deco2"], fish2)
 
 
 def draw_pacgums(screen: pygame.Surface, pacgums: set[Position],

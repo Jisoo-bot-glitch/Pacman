@@ -9,18 +9,19 @@ BASE_DIR = Path(getattr(sys, "_MEIPASS",
                         Path(__file__).resolve().parent.parent))
 ASSETS_DIR = BASE_DIR / "assets"
 
-
 SPRITE_FILES = {
     "player": "chataigne_left.png",
     "player_jump": "chataigne_jump_left.png",
-    "red": "cat3.png",
-    "pink": "cat1.png",
-    "cyan": "cat2.png",
+    "red": "cat1.png",
+    "pink": "cat2.png",
+    "cyan": "cat3.png",
     "orange": "cat4.png",
     "pacgum": "pacgum.png",
     "super_pacgum": "carrot.png",
     "deco1": "fish.png",
-    "deco2": "fish1.png"
+    "deco2": "fish1.png",
+    "frightened": "cat_blue.png",
+    "frightened_end": "cat_white.png",
 }
 
 
