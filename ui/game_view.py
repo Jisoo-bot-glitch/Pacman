@@ -3,9 +3,8 @@
 import pygame
 
 from game.ghost import Ghost
-from game.grid import N, E, S, W, ALL_WALLS
+from game.grid import N, E, S, W, ALL_WALLS, Position
 
-Position = tuple[int, int]
 
 TILE_SIZE = 36
 MARGIN = 20

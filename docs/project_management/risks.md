@@ -20,6 +20,7 @@ Problems we met (or expected), what they could break, and what we did.
 | 14 | mypy fails on mazegenerator (no type information) | `make lint-strict` fails | Add `[mypy-mazegenerator.*] ignore_missing_imports = True` to `setup.cfg` | ⏳ Proposed to Elvira |
 | 15 | Reviews take time (PR #1 not reviewed after several days) | Elvira's HUD needs `HUD_HEIGHT` from PR #1 | Kept working on the same branch, reminded Elvira, review planned for Nov 17 | ⏳ In progress |
 
+
 ## Blocking points so far
 
 - **Nov 11:** pygame install failure (risk 1).

@@ -5,6 +5,8 @@ S = 4
 W = 8
 ALL_WALLS = N | E | S | W
 
+Position = tuple[int, int]
+
 
 def can_move(maze: list[list[int]], x: int, y: int, direction: int) -> bool:
     """Return True if there is no wall on this side of the cell."""

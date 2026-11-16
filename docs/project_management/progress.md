@@ -19,6 +19,12 @@
 - Sprites: rabbit, 4 cats, frightened cats (blue and white), leaf, carrot, 2 fish.
 - `try_view.py`: temporary demo with fake data.
 - Reviewed Elvira's first PR.
+- `game/ghost_ai.py`: `neighbors` and `next_step` (BFS chase). First solved
+  a 3×3 maze by hand on paper, then wrote the code and checked it gives the
+  same answer. Passes `mypy --strict`.
+- `try_view.py`: press Space and the 4 ghosts move one cell toward the rabbit.
+  They go around the "42" and never enter dead ends.
+- Planned vs actual: BFS was planned for week 2, started and done on Nov 16.
 
 ![Week 1 timeline](images/asana_timeline_week1.png)
 

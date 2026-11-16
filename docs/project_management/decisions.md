@@ -18,6 +18,8 @@ Most of them come from our day-1 meeting (Nov 10–11). Later changes are dated.
 | Nov 11 | Tile-based movement (positions are always cells), 60 FPS | Simple and easy to test. Smooth drawing can be added later only in `game_view.py` | Both |
 | Nov 11 | Pacgums on every walkable cell except the start, super-pacgums in the 4 corners | Classic Pac-Man layout | Both |
 | Nov 11 | Our code uses its own `random.Random()` | The assigned package calls `random.seed()` on Python's shared random | Both |
+| Nov 16 | Ghosts chase with BFS (shortest path). `next_step(maze, start, target)` returns only the next cell, and takes any target cell | Subject 6.3 lets us choose the chase behavior. Only one step, because the player keeps moving. Any target, so eaten ghosts can go back to their corner and personalities can be added later | Jisoo |
+| Nov 16 | BFS queue is a `deque`, visited cells a `set`, arrows a `dict` | `popleft()` is fast, "already visited?" is fast, and arrows are pairs (cell → cell that found it) | Jisoo |
 
 ## Display
 
@@ -29,6 +31,7 @@ Most of them come from our day-1 meeting (Nov 10–11). Later changes are dated.
 | Nov 13 | `TILE_SIZE`, `MARGIN`, `HUD_HEIGHT` live together in `ui/game_view.py` | The window size depends on all three; Elvira's HUD imports `HUD_HEIGHT` | Both |
 | Nov 12 | Our own theme instead of the original Pac-Man: the player is a rabbit, pacgums are leaves, super-pacgums are carrots, ghosts are cats | Avoid copyrighted sprites, and make the game our own | Decided together, sprites drawn by Jisoo |
 | Nov 13 | Two fish stickers on fixed blocks of the "42" pattern | Decoration only. Fixed blocks (counted in drawing order) so they stay on the "42" for every maze size and never flicker | Jisoo |
+| Nov 16 | Drawing order: maze → pacgums → ghosts → player (player on top) | The player must always see their own character, also with the invincibility cheat | Jisoo |
 
 ## Team workflow
 
@@ -39,3 +42,4 @@ Most of them come from our day-1 meeting (Nov 10–11). Later changes are dated.
 | Nov 11 | Work with fake data until the other part is ready | We can work in parallel without waiting | Both |
 | Nov 13 | `try_view.py`: temporary demo that draws the game with fake data | Lets us see the screen before `app.py` exists, and shows how `app.py` can call `game_view` | Jisoo |
 | Nov 14 | Jisoo creates `docs/project_management/` first, each of us then fills in our own sections | Avoid both creating the same files | Jisoo |
+| Nov 16 | `Position` type moved to `game/grid.py` | `game/` must not import from `ui/`, so the game logic can be tested without pygame | Jisoo |
