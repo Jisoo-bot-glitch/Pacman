@@ -25,6 +25,10 @@
 - `try_view.py`: press Space and the 4 ghosts move one cell toward the rabbit.
   They go around the "42" and never enter dead ends.
 - Planned vs actual: BFS was planned for week 2, started and done on Nov 16.
+- `game/ghost.py`: `speed` and `update(maze, target, dt)`. Ghosts move by
+  themselves, one cell every 1 / speed seconds, using `dt` from the clock,
+  so the speed does not depend on the frame rate.
+- Planned vs actual: ghost speed was planned for Nov 18, done on Nov 16.
 
 ![Week 1 timeline](images/asana_timeline_week1.png)
 

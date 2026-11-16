@@ -3,7 +3,6 @@ import pygame
 from mazegenerator import MazeGenerator
 
 from game.ghost import Ghost
-from game.ghost_ai import next_step
 from ui.sprites import load_sprites
 from ui.game_view import (window_size, draw_pacgums,
                           draw_maze, draw_player, draw_ghosts,
@@ -17,6 +16,7 @@ window = window_size(maze)
 screen = pygame.display.set_mode(window)
 sprites = load_sprites()
 running = True
+clock = pygame.time.Clock()
 pos = (10, 15)
 last_x = len(maze[0]) - 1
 last_y = len(maze) - 1
@@ -32,13 +32,12 @@ pacgums = {(0, 1), (0, 2), (0, 3), (0,  4),
 super_pacgums = {(1, 0), (0, 16), (18, 18), (17, 0)}
 
 while running:
+    dt = clock.tick(60) / 1000
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            for ghost in ghosts:
-                ghost.pos = next_step(maze, ghost.pos, pos)
-
+    for ghost in ghosts:
+        ghost.update(maze, pos, dt)
     screen.fill(BACKGROUND_COLOR)
     draw_maze(screen, maze, sprites)
     draw_pacgums(screen, pacgums, super_pacgums, sprites)
