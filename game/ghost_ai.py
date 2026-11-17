@@ -2,17 +2,10 @@
 
 from collections import deque
 
-from game.grid import can_move, N, E, S, W, Position
-
-DIRECTIONS = {
-    N: (0, -1),
-    E: (1, 0),
-    W: (-1, 0),
-    S: (0, 1)
-}
+from game.grid import can_move, Position, DIRECTIONS
 
 
-def neighbors(maze: list[list[int]], pos: tuple[int, int]) -> list[Position]:
+def neighbors(maze: list[list[int]], pos: Position) -> list[Position]:
     """Return the cells next to pos with no wall in between.
 
     Directions are checked in the order N, E, S, W.

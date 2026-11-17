@@ -1,5 +1,7 @@
 """Draw the game screen: maze, pacgums, ghosts and the player."""
 
+from typing import Protocol
+
 import pygame
 
 from game.ghost import Ghost
@@ -13,6 +15,48 @@ BACKGROUND_COLOR = (255, 255, 255)
 WALL_COLOR = (139, 69, 19)
 PATTERN_COLOR = (135, 206, 235)
 WALL_WIDTH = 4
+
+
+class PlayerView(Protocol):
+    """What draw() needs from the player."""
+
+    @property
+    def pos(self) -> Position:
+        """Player cell as (x, y)."""
+        ...
+
+
+class GameView(Protocol):
+    """What draw() needs from the game.
+
+    Any object with these attributes can be drawn, so the Game class
+    in game/game.py only has to provide them with these names.
+    """
+
+    @property
+    def maze(self) -> list[list[int]]:
+        """The maze grid, read as maze[y][x]."""
+        ...
+
+    @property
+    def player(self) -> PlayerView:
+        """The player (only its pos is used)."""
+        ...
+
+    @property
+    def ghosts(self) -> list[Ghost]:
+        """All ghosts of the level."""
+        ...
+
+    @property
+    def pacgums(self) -> set[Position]:
+        """Cells that still have a small pacgum."""
+        ...
+
+    @property
+    def super_pacgums(self) -> set[Position]:
+        """Cells that still have a super-pacgum."""
+        ...
 
 
 def cell_to_pixel(pos: Position) -> tuple[int, int]:
@@ -53,38 +97,39 @@ def draw_maze(screen: pygame.Surface, maze: list[list[int]],
     Args:
         screen: The window surface to draw on.
         maze: The maze grid, read as maze[y][x].
+        sprites: All loaded images, from load_sprites().
     """
     count = 0
-    fish1 = (0, 0)
-    fish2 = (0, 0)
+    fish1: Position | None = None
+    fish2: Position | None = None
     for y, floor in enumerate(maze):
         for x, cell in enumerate(floor):
             px, py = cell_to_pixel((x, y))
-            right = px + TILE_SIZE, py + TILE_SIZE
-            bottom = px + TILE_SIZE, py + TILE_SIZE
+            right = px + TILE_SIZE
+            bottom = py + TILE_SIZE
             if cell & N:
                 pygame.draw.line(screen,
                                  WALL_COLOR,
                                  (px, py),
-                                 (px + TILE_SIZE, py),
+                                 (right, py),
                                  WALL_WIDTH)
             if cell & E:
                 pygame.draw.line(screen,
                                  WALL_COLOR,
-                                 (px + TILE_SIZE, py),
-                                 (right),
+                                 (right, py),
+                                 (right, bottom),
                                  WALL_WIDTH)
             if cell & S:
                 pygame.draw.line(screen,
                                  WALL_COLOR,
-                                 (px, py + TILE_SIZE),
-                                 (bottom),
+                                 (px, bottom),
+                                 (right, bottom),
                                  WALL_WIDTH)
             if cell & W:
                 pygame.draw.line(screen,
                                  WALL_COLOR,
                                  (px, py),
-                                 (px, py + TILE_SIZE),
+                                 (px, bottom),
                                  WALL_WIDTH)
             if cell == ALL_WALLS:
                 pygame.draw.rect(screen,
@@ -95,8 +140,10 @@ def draw_maze(screen: pygame.Surface, maze: list[list[int]],
                     fish1 = (px, py)
                 if count == 11:
                     fish2 = (px, py)
-    screen.blit(sprites["deco1"], fish1)
-    screen.blit(sprites["deco2"], fish2)
+    if fish1 is not None:
+        screen.blit(sprites["deco1"], fish1)
+    if fish2 is not None:
+        screen.blit(sprites["deco2"], fish2)
 
 
 def draw_pacgums(screen: pygame.Surface, pacgums: set[Position],
@@ -150,3 +197,21 @@ def draw_player(screen: pygame.Surface, pos: Position,
     player = sprites["player"]
     x, y = cell_to_pixel(pos)
     screen.blit(player, (x, y))
+
+
+def draw(screen: pygame.Surface, game: GameView,
+         sprites: dict[str, pygame.Surface]) -> None:
+    """Draw the whole game screen, in order: maze, pacgums, ghosts, player.
+
+    app.py calls this once per frame. It only reads game, never changes it.
+
+    Args:
+        screen: The window surface to draw on.
+        game: Anything that matches GameView (the Game object).
+        sprites: All loaded images, from load_sprites().
+    """
+    screen.fill(BACKGROUND_COLOR)
+    draw_maze(screen, game.maze, sprites)
+    draw_pacgums(screen, game.pacgums, game.super_pacgums, sprites)
+    draw_ghosts(screen, game.ghosts, sprites)
+    draw_player(screen, game.player.pos, sprites)

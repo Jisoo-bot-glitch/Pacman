@@ -2,8 +2,9 @@
 
 import sys
 from pathlib import Path
-
 import pygame
+
+from ui.game_view import TILE_SIZE
 
 BASE_DIR = Path(getattr(sys, "_MEIPASS",
                         Path(__file__).resolve().parent.parent))
@@ -30,6 +31,8 @@ def load_sprites() -> dict[str, pygame.Surface]:
 
     Must be called after pygame.display.set_mode(), because
     convert_alpha() needs the window to exist.
+    If an image cannot be loaded, a colored square is used instead
+    and a warning is printed, so the game does not crash.
 
     Returns:
         A dict from sprite name to its image.
@@ -37,7 +40,12 @@ def load_sprites() -> dict[str, pygame.Surface]:
     sprites = {}
     for name, filename in SPRITE_FILES.items():
         path = ASSETS_DIR / filename
-        image = pygame.image.load(path).convert_alpha()
+        try:
+            image = pygame.image.load(path).convert_alpha()
+        except (FileNotFoundError, pygame.error) as err:
+            print(f"Warning: cannot load {path}: {err}", file=sys.stderr)
+            image = pygame.Surface((TILE_SIZE, TILE_SIZE))
+            image.fill((255, 20, 147))
         sprites[name] = image
 
     return sprites
