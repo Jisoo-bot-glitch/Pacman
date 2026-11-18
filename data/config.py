@@ -28,10 +28,10 @@ class Rule(NamedTuple):
 
 NUMBER_RULES: dict[str, Rule] = {
     'lives': Rule(int, 3, 1, 9),
-    'points_per_pacgum': Rule(int, 10, 0, 1000),
-    'points_per_super_pacgum': Rule(int, 50, 0, 1000),
-    'points_per_ghost': Rule(int, 200, 0, 10000),
-    'seed': Rule(int, 42, 0, None),
+    'points_per_pacgum': Rule(int, 10, 1, 1000),
+    'points_per_super_pacgum': Rule(int, 50, 1, 1000),
+    'points_per_ghost': Rule(int, 200, 1, 10000),
+    'seed': Rule(int, 42, 1, None),
     'level_max_time': Rule(float, 90.0, 10.0, 600.0),
     'player_speed': Rule(float, 6.0, 1.0, 15.0),
     'ghost_speed': Rule(float, 5.0, 1.0, 15.0),

@@ -2,8 +2,7 @@ VENV = .venv
 PY = $(VENV)/bin/python
 CONFIG = config.json
 
-.PHONY:
-	install run debug clean lint lint-strict
+.PHONY: install run debug clean lint lint-strict
 
 install:
 	python3 -m venv $(VENV)
@@ -15,7 +14,7 @@ run:
 	$(PY) pac-man.py $(CONFIG)
 
 debug:
-	$(PY) -m pbd pac-man.py $(CONFIG)
+	$(PY) -m pdb pac-man.py $(CONFIG)
 
 clean:
 	find . -path ./$(VENV) -prune -o -type d -name __pycache__ -exec rm -rf {} +
