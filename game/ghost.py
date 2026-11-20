@@ -6,6 +6,7 @@ from game.ghost_ai import next_step
 CHASE = "chase"
 FRIGHTENED = "frightened"
 EATEN = "eaten"
+BLINK_TIME = 2.0
 
 
 class Ghost:
@@ -13,13 +14,19 @@ class Ghost:
 
     def __init__(self, name: str,
                  pos: Position,
-                 speed: float = 5.0) -> None:
+                 speed: float = 5.0,
+                 frightened_speed: float = 3.0,
+                 frightened_time: float = 7.0,
+                 respawn_time: float = 5.0) -> None:
         """Create a ghost at its spawn corner, chasing.
 
         Args:
             name: Ghost name ("red", "pink", "cyan" or "orange").
             pos: Spawn cell as (x, y).
-            speed: Cells per second.
+            speed: Cells per second when chasing.
+            frightened_speed: Cells per second when frightened.
+            frightened_time: Seconds a ghost stays frightened.
+            respawn_time: Seconds before an eaten ghost comes back.
         """
         self.name = name
         self.pos = pos
@@ -27,7 +34,19 @@ class Ghost:
         self.direction = W
         self.state = CHASE
         self.speed = speed
+        self.frightened_speed = frightened_speed
+        self.frightened_time = frightened_time
+        self.respawn_time = respawn_time
+        self.state_timer = 0.0
         self._move_timer = 0.0
+
+    @property
+    def is_blinking(self) -> bool:
+        """True in the last BLINK_TIME seconds of being frightened.
+
+        game_view uses it to switch between the blue and white sprite.
+        """
+        return self.state == FRIGHTENED and self.state_timer <= BLINK_TIME
 
     def update(self, maze: list[list[int]], target: Position,
                dt: float) -> None:
@@ -62,3 +81,25 @@ class Ghost:
                 self.direction = S
             elif new_y < old_y:
                 self.direction = N
+
+    def frighten(self) -> None:
+        """Make the ghost frightened (the player ate a super-pacgum).
+
+        The timer starts again from frightened_time, even if the ghost
+        was already frightened. An eaten ghost is not affected.
+        """
+        if self.state == EATEN:
+            return
+        self.state = FRIGHTENED
+        self.state_timer = self.frightened_time
+
+    def get_eaten(self) -> None:
+        """Send a frightened ghost home (the player ate it).
+
+        Only a frightened ghost can be eaten. It disappears for
+        respawn_time seconds, then comes back at its spawn corner.
+        """
+        if self.state != FRIGHTENED:
+            return
+        self.state = EATEN
+        self.state_timer = self.respawn_time
