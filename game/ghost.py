@@ -64,10 +64,24 @@ class Ghost:
             target: The cell to move toward.
             dt: Seconds since the last frame.
         """
+        if self.state != CHASE:
+            self.state_timer -= dt
+            if self.state_timer <= 0:
+                if self.state == EATEN:
+                    self.pos = self.spawn
+                self.state = CHASE
+                self.state_timer = 0.0
+                self._move_timer = 0.0
+        if self.state == EATEN:
+            return
+        if self.state == FRIGHTENED:
+            speed = self.frightened_speed
+        else:
+            speed = self.speed
         if self.speed <= 0:
             return
         self._move_timer += dt
-        step_time = 1 / self.speed
+        step_time = 1 / speed
         if self._move_timer >= step_time:
             self._move_timer -= step_time
             old_x, old_y = self.pos

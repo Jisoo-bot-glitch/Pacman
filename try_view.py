@@ -56,6 +56,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+            for ghost in game.ghosts:
+                ghost.frighten()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+            for ghost in game.ghosts:
+                ghost.get_eaten()
     for ghost in game.ghosts:
         ghost.update(game.maze, game.player.pos, dt)
     draw(screen, game, sprites)
