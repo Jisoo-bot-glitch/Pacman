@@ -1,7 +1,7 @@
 """Ghost data and state changes."""
 
 from game.grid import E, N, S, W, Position
-from game.ghost_ai import next_step
+from game.ghost_ai import next_step, run_away_step
 
 CHASE = "chase"
 FRIGHTENED = "frightened"
@@ -58,6 +58,7 @@ class Ghost:
         A speed of 0 or less means the ghost does not move.
         After moving, direction is set to the way the ghost went.
         If it did not move, direction stays the same.
+        A frightened ghost runs away from target instead of chasing it.
 
         Args:
             maze: The maze grid, read as maze[y][x].
@@ -85,7 +86,10 @@ class Ghost:
         if self._move_timer >= step_time:
             self._move_timer -= step_time
             old_x, old_y = self.pos
-            self.pos = next_step(maze, self.pos, target)
+            if self.state == FRIGHTENED:
+                self.pos = run_away_step(maze, self.pos, target)
+            else:
+                self.pos = next_step(maze, self.pos, target)
             new_x, new_y = self.pos
             if new_x > old_x:
                 self.direction = E

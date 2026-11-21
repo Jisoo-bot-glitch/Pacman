@@ -1,8 +1,10 @@
 """Ghost movement: BFS chase toward a target cell."""
-
+import random
 from collections import deque
 
 from game.grid import can_move, Position, DIRECTIONS
+
+_rng = random.Random()
 
 
 def neighbors(maze: list[list[int]], pos: Position) -> list[Position]:
@@ -67,3 +69,30 @@ def next_step(maze: list[list[int]], start: Position,
     while parents[cell] != start:
         cell = parents[cell]
     return cell
+
+
+def run_away_step(maze: list[list[int]], start: Position,
+                  target: Position) -> Position:
+    """Return the next cell to run away from target.
+
+    Used when the ghost is frightened. It takes any open neighbor
+    except the first step toward target, chosen at random so the
+    ghosts spread out. If that step is the only way out (dead end),
+    the ghost takes it anyway.
+
+    Args:
+        maze: The maze grid, read as maze[y][x].
+        start: The ghost's cell.
+        target: The cell to run away from (the player).
+
+    Returns:
+        The next cell to move to.
+    """
+    avoid_way = next_step(maze, start, target)
+    options = []
+    for option in neighbors(maze, start):
+        if option != avoid_way:
+            options.append(option)
+    if options:
+        return (_rng.choice(options))
+    return avoid_way

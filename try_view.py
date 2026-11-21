@@ -2,8 +2,8 @@
 import pygame
 from mazegenerator import MazeGenerator
 
-from game.ghost import Ghost
-from game.grid import Position
+from game.ghost import Ghost, FRIGHTENED, CHASE
+from game.grid import Position, can_move, DIRECTIONS, E, N, S, W
 from ui.sprites import load_sprites
 from ui.game_view import window_size, draw
 
@@ -28,6 +28,7 @@ class FakeGame:
         self.super_pacgums = super_pacgums
 
 
+lives = 3
 pygame.init()
 maze = MazeGenerator(size=(20, 20), seed=42).maze
 
@@ -37,6 +38,7 @@ sprites = load_sprites()
 running = True
 clock = pygame.time.Clock()
 pos = (10, 15)
+start_pos = pos
 last_x = len(maze[0]) - 1
 last_y = len(maze) - 1
 ghosts = [
@@ -62,8 +64,35 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_e:
             for ghost in game.ghosts:
                 ghost.get_eaten()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            x, y = game.player.pos
+            if can_move(game.maze, x, y, W):
+                dx, dy = DIRECTIONS[W]
+                game.player.pos = (x + dx, y + dy)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            x, y = game.player.pos
+            if can_move(game.maze, x, y, E):
+                dx, dy = DIRECTIONS[E]
+                game.player.pos = (x + dx, y + dy)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            x, y = game.player.pos
+            if can_move(game.maze, x, y, N):
+                dx, dy = DIRECTIONS[N]
+                game.player.pos = (x + dx, y + dy)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            x, y = game.player.pos
+            if can_move(game.maze, x, y, S):
+                dx, dy = DIRECTIONS[S]
+                game.player.pos = (x + dx, y + dy)
     for ghost in game.ghosts:
         ghost.update(game.maze, game.player.pos, dt)
+    for ghost in game.ghosts:
+        if ghost.pos == game.player.pos and ghost.state == FRIGHTENED:
+            ghost.get_eaten()
+        elif ghost.pos == game.player.pos and ghost.state == CHASE:
+            lives -= 1
+            print(f"Caught! Lives left:{lives}")
+            game.player.pos = pos
     draw(screen, game, sprites)
     pygame.display.flip()
 
