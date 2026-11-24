@@ -83,3 +83,11 @@ def test_is_blinking() -> None:
     assert not ghost.is_blinking
     ghost.update(MAZE, TARGET, 5.5)
     assert ghost.is_blinking
+
+
+def test_frightened_zero_speed_does_not_move() -> None:
+    """At frighten speed 0, the ghost does not move."""
+    ghost = Ghost("red", (0, 0), frightened_speed=0)
+    ghost.frighten()
+    ghost.update(MAZE, TARGET, 0.25)
+    assert ghost.pos == (0, 0)

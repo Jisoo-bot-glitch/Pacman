@@ -79,7 +79,7 @@ class Ghost:
             speed = self.frightened_speed
         else:
             speed = self.speed
-        if self.speed <= 0:
+        if speed <= 0:
             return
         self._move_timer += dt
         step_time = 1 / speed
