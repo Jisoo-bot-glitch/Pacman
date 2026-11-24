@@ -21,9 +21,9 @@ you again.
 CONTROLS
 --------
 Arrow keys or WASD   Move
-???                  Pause
-???                  Quit
-???                  Menu keys
+P or Esc             Pause
+Close the window     Quit
+Arrow keys + Enter   Menu keys
 
 RULES
 -----
@@ -37,7 +37,8 @@ RULES
 - The game has 10 levels. The first maze is always the same
   (seed 42), the next ones are random.
 - Game over when you have no lives left.
-- High scores: ???
+- High scores: he top 10 scores are saved in highscores.json.
+  At the end of a game you can type your name.
 
 CHEAT KEYS (for the evaluation)
 -------------------------------
@@ -68,4 +69,4 @@ Main keys (default value):
   ghost_respawn_time        5       seconds
   levels                    list of mazes, each with width and height
                             (width 15 to 30, height 11 to 20)
-  ???                       high score file
+  highscore_filename        highscores.json
