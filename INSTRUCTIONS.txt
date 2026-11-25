@@ -1,0 +1,72 @@
+PAC-MAN (rabbit edition)
+========================
+
+HOW TO START
+------------
+Open a terminal in this folder and run:
+
+    ./pac-man config.json
+
+The game needs exactly one argument: a JSON config file.
+You can edit config.json to change the game (see CONFIGURATION).
+
+GOAL
+----
+You are a rabbit. Eat all the leaves in the maze to finish the level.
+Avoid the cats! Eat a carrot (in a corner of the maze) to make the
+cats frightened for a few seconds: they turn blue and run away, and
+you can eat them. When they start blinking, they are about to chase
+you again.
+
+CONTROLS
+--------
+Arrow keys or WASD   Move
+P or Esc             Pause
+Close the window     Quit
+Arrow keys + Enter   Menu keys
+
+RULES
+-----
+- You start with 3 lives. A cat catching you costs one life, and you
+  start again in the middle of the maze.
+- Leaf              +10 points
+- Carrot            +50 points, cats get frightened
+- Frightened cat    +200 points (it comes back to its corner later)
+- Each level has a time limit of 90 seconds. When time runs out, you
+  lose a life and the timer restarts.
+- The game has 10 levels. The first maze is always the same
+  (seed 42), the next ones are random.
+- Game over when you have no lives left.
+- High scores: he top 10 scores are saved in highscores.json.
+  At the end of a game you can type your name.
+
+CHEAT KEYS (for the evaluation)
+-------------------------------
+1   Invincibility (cats cannot catch you)
+2   Skip to the next level
+3   Freeze the cats
+4   Extra life
+5   Double speed
+"CHEAT" is shown in the game screen when a cheat is on.
+
+CONFIGURATION
+-------------
+Settings are in config.json. Lines starting with # are comments.
+If a value is missing or wrong, the game uses a safe default and
+prints a message. Unknown keys are ignored.
+
+Main keys (default value):
+  lives                     3
+  seed                      42
+  level_max_time            90      seconds
+  points_per_pacgum         10
+  points_per_super_pacgum   50
+  points_per_ghost          200
+  player_speed              6       cells per second
+  ghost_speed               5       cells per second
+  frightened_ghost_speed    3       cells per second
+  frightened_time           7       seconds
+  ghost_respawn_time        5       seconds
+  levels                    list of mazes, each with width and height
+                            (width 15 to 30, height 11 to 20)
+  highscore_filename        highscores.json

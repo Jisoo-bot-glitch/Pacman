@@ -35,7 +35,38 @@
 ### Elvira
 - (to fill)
 
+## Week 2 (Nov 18–24)
+
+### Jisoo
+- Reviewed and approved Elvira's PR #2. Both PRs merged into `main`,
+  and `main` is now protected (a PR and 1 approval are needed).
+- `game/ghost.py`: ghost states CHASE, FRIGHTENED and EATEN, each with a timer.
+  `frighten()`, `get_eaten()`, respawn at the spawn corner, `is_blinking`.
+- `game/ghost_ai.py`: `run_away_step`. A frightened ghost avoids the BFS step
+  toward the rabbit and picks another open cell at random.
+- `ui/game_view.py`: frightened cats are drawn blue and blink white in the
+  last 2 seconds. Eaten cats are not drawn.
+- `try_view.py`: arrow keys move the rabbit, F frightens the cats, E eats them,
+  and a simple collision costs a life.
+- Tests: 20 tests for `grid.py`, `ghost_ai.py` and `ghost.py`. All pass,
+  with `flake8` and `mypy --strict`.
+- Found a crash with a test: a frightened speed of 0 divided by zero.
+  Wrote the failing test first, then fixed the speed check.
+- `INSTRUCTIONS.txt` for the itch.io package, with Elvira's keys and high scores.
+- Docs: decisions and risks updated.
+- Planned vs actual: flee, states, timers and tests are done.
+  Rabbit sprites for the other directions are not done yet (nice to have).
+- The Asana trial ended, so we are moving to a GitHub Projects board.
+
+![Week 2 board](images/github_board_week2.png)
+
+
+### Elvira
+- (to fill)
+
 ## Next week (Jisoo)
-- `ghost_ai.py`: BFS chase, speed, flee
-- `ghost.py`: states and timers
-- Tests, rabbit sprites for the other directions
+- `pac-man.spec` and a practice build on school Linux
+- Friday: connect my part with Elvira's `game.py` and `app.py`
+- Weekend: play-test together, tune speeds and times in the config
+- Final build on school Linux, itch.io page
+- README sections, test plan

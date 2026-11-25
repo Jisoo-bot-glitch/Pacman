@@ -4,7 +4,7 @@ from typing import Protocol
 
 import pygame
 
-from game.ghost import Ghost
+from game.ghost import Ghost, EATEN, FRIGHTENED
 from game.grid import N, E, S, W, ALL_WALLS, Position
 
 
@@ -15,6 +15,7 @@ BACKGROUND_COLOR = (255, 255, 255)
 WALL_COLOR = (139, 69, 19)
 PATTERN_COLOR = (135, 206, 235)
 WALL_WIDTH = 4
+BLINK_MS = 250
 
 
 class PlayerView(Protocol):
@@ -173,6 +174,8 @@ def draw_pacgums(screen: pygame.Surface, pacgums: set[Position],
 def draw_ghosts(screen: pygame.Surface, ghosts: list[Ghost],
                 sprites: dict[str, pygame.Surface]) -> None:
     """Draw every ghost on its cell.
+    Eaten ghosts are not drawn. Frightened ghosts are blue, and blink
+    blue/white in their last seconds.
 
     Args:
         screen: The window surface to draw on.
@@ -180,7 +183,15 @@ def draw_ghosts(screen: pygame.Surface, ghosts: list[Ghost],
         sprites: All loaded images, from load_sprites().
     """
     for ghost in ghosts:
-        image = sprites[ghost.name]
+        if ghost.state == EATEN:
+            continue
+        if ghost.state == FRIGHTENED:
+            image = sprites["frightened"]
+            white_turn = pygame.time.get_ticks() // BLINK_MS % 2 == 0
+            if ghost.is_blinking and white_turn:
+                image = sprites["frightened_end"]
+        else:
+            image = sprites[ghost.name]
         x, y = cell_to_pixel(ghost.pos)
         screen.blit(image, (x, y))
 

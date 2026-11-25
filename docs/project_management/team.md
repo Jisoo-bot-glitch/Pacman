@@ -73,4 +73,4 @@ More details in [risks.md](risks.md).
 ## Tools
 
 - **GitHub:** branches, pull requests, reviews.
-- **Asana:** Jisoo's task timeline and board (see [timeline.md](timeline.md)).
+- **Asana (week 1), then GitHub Projects (from week 2):** task board for both of us (see [timeline.md](timeline.md)).
