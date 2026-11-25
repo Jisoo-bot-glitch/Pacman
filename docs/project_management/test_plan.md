@@ -3,7 +3,7 @@
 How we check every feature of the subject by hand, on the real game.
 Unit tests (pytest) are in `tests/`. This plan is for what a player sees.
 
-Result: ✅ works, ❌ bug found, ⏳ not tested yet.
+Result: ✅ (try_view, Nov 25)
 
 ## Start and config (subject 5.1–5.3)
 
