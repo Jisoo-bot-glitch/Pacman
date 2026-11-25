@@ -58,6 +58,9 @@
   Rabbit sprites for the other directions are not done yet (nice to have).
 - The Asana trial ended, so we are moving to a GitHub Projects board.
 
+![Week 2 board](images/github_board_week2.png)
+
+
 ### Elvira
 - (to fill)
 

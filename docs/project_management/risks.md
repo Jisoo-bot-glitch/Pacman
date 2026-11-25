@@ -19,7 +19,7 @@ Problems we met (or expected), what they could break, and what we did.
 | 13 | Working on two computers (home Mac and school Linux) | Old code, or a push refused by GitHub | `git pull` first every time we change computer. `.venv` made on each computer and never committed | ✅ Rule followed |
 | 14 | mypy fails on mazegenerator (no type information) | `make lint-strict` fails | Add `[mypy-mazegenerator.*] ignore_missing_imports = True` to `setup.cfg` | ✅ Solved (Elvira added it) |
 | 15 | Reviews take time (PR #1 not reviewed after several days) | Elvira's HUD needs `HUD_HEIGHT` from PR #1 | Kept working on the same branch, reminded Elvira, review planned for Nov 17 | ✅ Solved (both PRs reviewed and merged) |
-| 16 | Frightened speed 0 (possible from the config) made `1 / speed` divide by zero | The game crashes, for example during the defense | Found with a test. The speed check now uses the speed of the current state. Test kept | ✅ Solved |
+| 16 | Frightened speed 0 made `1 / speed` divide by zero. The config already keeps it at 0.5 or more, but the Ghost class itself could crash |
 | 17 | Crossing collision: the rabbit and a ghost swap cells in the same frame, so they are never on the same cell | The rabbit passes through a ghost | Told Elvira, to handle in the collision rules | ⏳ Elvira |
 | 18 | A frightened ghost can go back and forth in a corner | Looks stuck, the game is a bit easier | Accepted for now. Possible fix: do not go back to the previous cell | ⚠️ Accepted |
 
