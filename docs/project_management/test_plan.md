@@ -10,7 +10,7 @@ Result: ✅ works, ❌ bug found, ⏳ not tested yet.
 | # | Feature | How to test | Expected | Result | Bug found / fixed |
 |---|---|---|---|---|---|
 | 1 | Exactly one argument | Run `./pac-man` with no argument, then with two | Clear error message, no traceback | ⏳ | |
-| 2 | Missing config file | `./pac-man nofile.json` | Clear error message, no traceback | ⏳ | |
+| 2 | Missing config file | `./pac-man nofile.json` | A message, then the game starts with the default config, no traceback | ⏳ | |
 | 3 | Comments in config | Add a line starting with `#` | The game starts normally | ⏳ | |
 | 4 | Wrong value | Set `"lives": 100` or `"lives": "abc"` | Safe value used, message in the log | ⏳ | |
 | 5 | Unknown key | Add `"color": "red"` | Ignored, the game starts | ⏳ | |
