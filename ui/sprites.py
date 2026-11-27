@@ -25,6 +25,8 @@ SPRITE_FILES = {
     "frightened_end": "cat_white.png",
 }
 
+FONT_FILE = "fonts/midnight-letters/MidnightLetters-Regular.ttf"
+
 
 def load_sprites() -> dict[str, pygame.Surface]:
     """Load every sprite listed in SPRITE_FILES.
@@ -49,3 +51,23 @@ def load_sprites() -> dict[str, pygame.Surface]:
         sprites[name] = image
 
     return sprites
+
+
+def load_font(size: int) -> pygame.font.Font:
+    """Load the HUD font from the assets folder.
+
+    If the file is missing or broken, use pygame's default font,
+    so the game does not crash.
+
+    Args:
+        size: Height of the letters in pixels.
+
+    Returns:
+        The font from FONT_FILE, or pygame's default font if it fails.
+    """
+    try:
+        return pygame.font.Font(ASSETS_DIR / FONT_FILE, size)
+    except (FileNotFoundError, pygame.error):
+        print(f"Warning: cannot load {FONT_FILE}, using the default font",
+              file=sys.stderr)
+        return pygame.font.Font(None, size)

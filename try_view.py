@@ -4,8 +4,10 @@ from mazegenerator import MazeGenerator
 
 from game.ghost import Ghost, FRIGHTENED, CHASE
 from game.grid import Position, can_move, DIRECTIONS, E, N, S, W
-from ui.sprites import load_sprites
+from ui.sprites import load_sprites, load_font
 from ui.game_view import window_size, draw
+from game.session import Session
+from ui.hud import draw_hud
 
 
 class FakePlayer:
@@ -35,6 +37,9 @@ maze = MazeGenerator(size=(20, 20), seed=42).maze
 window = window_size(maze)
 screen = pygame.display.set_mode(window)
 sprites = load_sprites()
+small_font = load_font(18)
+title_font = load_font(40)
+session = Session()
 running = True
 clock = pygame.time.Clock()
 pos = (10, 15)
@@ -94,6 +99,7 @@ while running:
             print(f"Caught! Lives left:{lives}")
             game.player.pos = pos
     draw(screen, game, sprites)
+    draw_hud(screen, session, small_font, title_font)
     pygame.display.flip()
 
 pygame.quit()

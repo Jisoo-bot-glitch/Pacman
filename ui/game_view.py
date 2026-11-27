@@ -12,6 +12,7 @@ TILE_SIZE = 36
 MARGIN = 20
 HUD_HEIGHT = 48
 BACKGROUND_COLOR = (255, 255, 255)
+OUTSIDE_COLOR = (25, 35, 80)
 WALL_COLOR = (139, 69, 19)
 PATTERN_COLOR = (135, 206, 235)
 WALL_WIDTH = 4
@@ -63,6 +64,8 @@ class GameView(Protocol):
 def cell_to_pixel(pos: Position) -> tuple[int, int]:
     """Return the top-left pixel of a maze cell.
 
+    The maze starts below the HUD bar, with a margin around it.
+
     Args:
         pos: Cell position as (x, y).
 
@@ -71,7 +74,7 @@ def cell_to_pixel(pos: Position) -> tuple[int, int]:
     """
     x, y = pos
     x = TILE_SIZE * x + MARGIN
-    y = TILE_SIZE * y + MARGIN
+    y = TILE_SIZE * y + MARGIN + HUD_HEIGHT
 
     return x, y
 
@@ -212,8 +215,9 @@ def draw_player(screen: pygame.Surface, pos: Position,
 
 def draw(screen: pygame.Surface, game: GameView,
          sprites: dict[str, pygame.Surface]) -> None:
-    """Draw the whole game screen, in order: maze, pacgums, ghosts, player.
+    """Draw the whole game screen.
 
+    Order: outside color, white maze area, maze, pacgums, ghosts, player.
     app.py calls this once per frame. It only reads game, never changes it.
 
     Args:
@@ -221,7 +225,10 @@ def draw(screen: pygame.Surface, game: GameView,
         game: Anything that matches GameView (the Game object).
         sprites: All loaded images, from load_sprites().
     """
-    screen.fill(BACKGROUND_COLOR)
+    screen.fill(OUTSIDE_COLOR)
+    maze_rect = (MARGIN, MARGIN + HUD_HEIGHT,
+                 TILE_SIZE * len(game.maze[0]), TILE_SIZE * len(game.maze))
+    pygame.draw.rect(screen, BACKGROUND_COLOR, maze_rect)
     draw_maze(screen, game.maze, sprites)
     draw_pacgums(screen, game.pacgums, game.super_pacgums, sprites)
     draw_ghosts(screen, game.ghosts, sprites)
