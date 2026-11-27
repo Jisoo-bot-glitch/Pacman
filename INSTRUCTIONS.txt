@@ -47,7 +47,6 @@ CHEAT KEYS (for the evaluation)
 3   Freeze the cats
 4   Extra life
 5   Double speed
-"CHEAT" is shown in the game screen when a cheat is on.
 
 CONFIGURATION
 -------------

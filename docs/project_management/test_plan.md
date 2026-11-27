@@ -3,7 +3,7 @@
 How we check every feature of the subject by hand, on the real game.
 Unit tests (pytest) are in `tests/`. This plan is for what a player sees.
 
-Result: ✅ (try_view, Nov 25)
+Result: ✅ works, ❌ bug found, ⏳ not tested yet.
 
 ## Start and config (subject 5.1–5.3)
 
@@ -35,10 +35,10 @@ Result: ✅ (try_view, Nov 25)
 
 | # | Feature | How to test | Expected | Result | Bug found / fixed |
 |---|---|---|---|---|---|
-| 17 | Chase | Move away from the cats | Cats follow the rabbit by the shortest way | ⏳ | |
-| 18 | Run away | Eat a carrot | Blue cats move away from the rabbit | ⏳ | |
-| 19 | Blinking | Wait after eating a carrot | Cats blink blue / white in the last 2 seconds | ⏳ | |
-| 20 | Back to chase | Wait until the blinking ends | Cats chase again | ⏳ | |
+| 17 | Chase | Move away from the cats | Cats follow the rabbit by the shortest way | ✅ (try_view, Nov 25) | |
+| 18 | Run away | Eat a carrot | Blue cats move away from the rabbit | ✅ (try_view, Nov 25) | |
+| 19 | Blinking | Wait after eating a carrot | Cats blink blue / white in the last 2 seconds | ✅ (try_view, Nov 25) | |
+| 20 | Back to chase | Wait until the blinking ends | Cats chase again | ✅ (try_view, Nov 25) | |
 
 ## Screens and HUD
 
@@ -55,12 +55,12 @@ Result: ✅ (try_view, Nov 25)
 
 | # | Feature | How to test | Expected | Result | Bug found / fixed |
 |---|---|---|---|---|---|
-| 27 | Cheat keys | Press 1 to 5 one by one | Each cheat works, "CHEAT" is shown | ⏳ | |
+| 27 | Cheat keys | Press 1 to 5 one by one | Each cheat works | ⏳ | |
 
 ## Errors and packaging
 
 | # | Feature | How to test | Expected | Result | Bug found / fixed |
 |---|---|---|---|---|---|
-| 28 | Missing sprite | Rename one image in `assets/` | A pink square instead, warning in the terminal, no crash | ⏳ | |
+| 28 | Missing sprite | Rename one image in `assets/` | A pink square instead, warning in the terminal, no crash | ✅ (try_view, Nov 25) | |
 | 29 | Packaged game | Download from itch.io, run on school Linux | The game starts without Python installed | ✅ (practice build, Nov 12) | `assets/` not found → fixed with `BASE_DIR` |
 | 30 | Final package | Same test with the final build | The game starts, all assets found | ⏳ | |
